@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = import.meta.env.VITE_API_URL;
-console.log("Axios Base URL is:", API);
+
 const client = axios.create({
   baseURL: API,
   headers: {
@@ -26,8 +26,8 @@ export const NotesAPI = {
     const res = await client.put(`/api/notes/${id}`, payload);
     return res.data;
   },
-  delete: async (id) => {
-    const res = await client.delete(`/${id}`);
+  remove: async (id) => {
+    const res = await client.delete(`api/notes/${id}`);
     return res.data;
   },
 };

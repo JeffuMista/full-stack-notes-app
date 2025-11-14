@@ -36,7 +36,7 @@ export default function Dashboard({ frontendUserId }) {
   }
 
   async function deleteNote(id) {
-    await NotesAPI.delete(id);
+    await NotesAPI.remove(id);
     setNotes((prev) => prev.filter((n) => n._id !== id));
   }
   return (
