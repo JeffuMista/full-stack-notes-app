@@ -1,7 +1,14 @@
 import Dashboard from "./pages/dashboard";
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useUser,
+} from "@clerk/clerk-react";
 
 export default function App() {
-  const fakeUserId = import.meta.env.VITE_FAKE_USER_ID; //Simulates a user on the front-end
+  const { user } = useUser();
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -14,14 +21,27 @@ export default function App() {
               Express + Mongo + React + Tailwind + Radix Frontend App
             </p>
           </div>
-          <div className="text-sm text-slate-600">
-            user: <span className="font-mono">{fakeUserId || "anonymous"} </span>
+          <div className="flex items-center gap-3">
+            <SignedOut>
+              <SignInButton mode="modal" />
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
           </div>
         </div>
       </header>
       <main className="py-6">
         <div className="mx-auto max-w-5xl">
-          <Dashboard frontendUserId={fakeUserId} />
+          <SignedOut>
+            <div className="border rounded-xl bg-white text-center p-6">
+              <h2 className="text-lg font-semibold mb-2"> Welcome! </h2>
+              <p className="text-slate-600"> Please sign in to continue.</p>
+            </div>
+          </SignedOut>
+          <SignedIn>
+            <Dashboard frontendUserId={user?.id} />
+          </SignedIn>
         </div>
       </main>
     </div>
